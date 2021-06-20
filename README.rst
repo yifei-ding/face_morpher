@@ -1,3 +1,6 @@
+2021/6/20: Change to
+--out_frames=<folder>   Folder path to save only one image (w=0.5)
+-----------------------------------------------------
 Face Morpher
 ============
 
