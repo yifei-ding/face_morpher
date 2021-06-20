@@ -100,23 +100,23 @@ def morph(src_img, src_points, dest_img, dest_points,
   video.write(src_img, 1)
 
   # Produce morph frames!
-  for percent in np.linspace(1, 0, num=num_frames):
-    points = locator.weighted_average_points(src_points, dest_points, percent)
-    src_face = warper.warp_image(src_img, src_points, points, size)
-    end_face = warper.warp_image(dest_img, dest_points, points, size)
-    average_face = blender.weighted_average(src_face, end_face, percent)
 
-    if background in ('transparent', 'average'):
-      mask = blender.mask_from_points(average_face.shape[:2], points)
-      average_face = np.dstack((average_face, mask))
+  points = locator.weighted_average_points(src_points, dest_points, 0.5)
+  src_face = warper.warp_image(src_img, src_points, points, size)
+  end_face = warper.warp_image(dest_img, dest_points, points, size)
+  average_face = blender.weighted_average(src_face, end_face, 0.5)
 
-      if background == 'average':
-        average_background = blender.weighted_average(src_img, dest_img, percent)
-        average_face = blender.overlay_image(average_face, mask, average_background)
+  if background in ('transparent', 'average'):
+    mask = blender.mask_from_points(average_face.shape[:2], points)
+    average_face = np.dstack((average_face, mask))
 
-    plt.plot_one(average_face)
-    plt.save(average_face)
-    video.write(average_face)
+    if background == 'average':
+      average_background = blender.weighted_average(src_img, dest_img, 0.5)
+      average_face = blender.overlay_image(average_face, mask, average_background)
+
+  plt.plot_one(average_face)
+  plt.save(average_face)
+  video.write(average_face)
 
   plt.plot_one(dest_img)
   video.write(dest_img, stall_frames)
