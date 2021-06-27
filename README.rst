@@ -1,3 +1,6 @@
+| 2021/6/27: Add morpher2 
+| --out_frames=<folder>   Folder path to save only one image (w=0.6667 and w=0.3333)
+============
 | 2021/6/20: Change to
 | --out_frames=<folder>   Folder path to save only one image (w=0.5)
 ============
